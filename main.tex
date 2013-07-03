@@ -1,0 +1,118 @@
+
+\documentclass[sunil1,ChapterTOCs]{sunil}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{subfig}
+\usepackage{makeidx}
+%\usepackage[breaklinks]{hyperref}
+\usepackage[pdfborder={0 0 0}]{hyperref}
+\usepackage{multirow}
+\usepackage{multicol}
+\usepackage{tabulary}
+\usepackage{listings}
+\usepackage{wrapfig}
+\frenchspacing
+\tolerance=5000
+
+% Thanks to Wes Bethel (LBL) for providing us with the template for this document
+\usepackage{url}
+
+\usepackage[sectionbib]{bibunits}
+\usepackage{ifthen}
+\newboolean{useColorImgs}
+%\setboolean{useColorImgs}{false}
+\setboolean{useColorImgs}{true}
+\newcommand{\myIfColor}{\ifthenelse{\boolean{useColorImgs}}}
+
+%\makeatletter
+%\makeatother
+\makeindex
+
+%\newcommand{\fix}[1]{{\textbf{\textit{#1}}}}
+%\newcommand{\todo}[1]{{\textbf{\textit{#1}}}}
+%\newcommand{\fix}[1]{\textcolor{red}{\textbf{\textit{#1}}}}
+%\newcommand{\todo}[1]{\textcolor{red}{\textbf{\textit{#1}}}}
+
+% todo: adds a note in the margin
+\usepackage{xcolor}
+\newcommand{\todo}[1]{
+      \addcontentsline{tdo}{todo}{\protect{#1}}
+      \marginpar{\colorbox{white!90!black}{\textcolor{red}{
+      \parbox{2.1cm}{\scriptsize\bf\raggedright #1}
+      }}}
+}
+\newcommand{\fix}[1]{
+      \addcontentsline{tdo}{todo}{\protect{#1}}
+      \marginpar{\colorbox{white!90!black}{\textcolor{red}{
+      \parbox{2.1cm}{\scriptsize\bf\raggedright #1}
+      }}}
+}
+
+\newenvironment{tightItemize}{
+\begin{itemize}
+        \setlength{\itemsep}{1pt}
+        \setlength{\parskip}{0pt}
+        \setlength{\parsep}{0pt}
+}{\end{itemize}
+}
+\newenvironment{tightEnumerate}{
+\begin{enumerate}
+        \setlength{\itemsep}{1pt}
+        \setlength{\parskip}{0pt}
+        \setlength{\parsep}{0pt}
+}{\end{enumerate}
+}
+
+
+\include{hyphenation-list}
+\include{common-macros}
+
+\begin{document}
+
+\bibliographyunit[\chapter]
+\defaultbibliographystyle{plain}
+
+\title{High Performance Parallel I/O}
+
+\author{Prabhat, Quincey Koziol}
+
+%\maketitle
+
+%\frontmatter
+%\include{frontmatter/Foreword}
+%\include{frontmatter/preface}
+%\include{frontmatter/contributors}
+
+%\listoffigures
+%\listoftables
+
+%\tableofcontents
+
+%\include{acknowledgments}
+
+\mainmatter
+
+%\include{Chapters/symbollist}
+
+\setcounter{page}{1}
+
+%% part 0
+%\part{Title of Part/Section Goes Here}
+
+% chapter 1 - introduction. 
+
+%% part III
+%\part{I/O Libraries}
+%\label{part:IOLibraries}
+
+
+\begin{bibunit}[plain]
+\include{Chapters/part3-ch5-adios/part3-ch5-adios}
+\end{bibunit}
+
+
+\clearpage
+\printindex
+
+\end{document}

@@ -1,0 +1,5 @@
+%\subsubsection*{Plasma Fusion simulations}
+
+The largest community that uses ADIOS is of the plasma fusion simulations, as several fusion scientists have been collaborating with the ADIOS team and used the library in their applications from the beginning, giving invaluable insight for the ADIOS team in the works of many large scale simulations. Particle simulation based fusion applications that can utilize the largest  supercomputers (i.e. several hundreds of thousands of cores today), like XGC1, GTC and GTC-P all use ADIOS for writing the large checkpoint/restart data as well as the small but frequent diagnostic data. ADIOS played center role in coupling multiple fusion codes together for creating a multi-scale multi-physics fusion simulation~\cite{ADIOS:Docan:ccgrid10}. The separate codes used ADIOS to write and read data that was transferred between the codes directly without writing files. Magneto-hydrodynamic codes like M3D-K, M3D-C1 and GEM also use ADIOS for checkpoint/restart because they had I/O bottlenecks already at a few hundred cores. The output of M3D was also changed to ADIOS in order to feed that data into XGC in a fusion coupling scenario. 
+
+
