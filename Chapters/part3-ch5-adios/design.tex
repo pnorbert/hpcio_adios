@@ -1,12 +1,38 @@
 {\color {red}Where is the library positioned in the I/O stack? What design constraints drove the architecture?}
 
-ADIOS~\cite{ADIOS:Lofstead:ipdps09} sits on the top of the I/O stack as a user-level I/O library. The write API of ADIOS is designed to be as close to the POSIX I/O calls as possible, but without a fix specification about what happens in a "write" call. Datasets are "opened" and "closed" and variables are "written" to them. In general, write calls only buffer the data content, and in the close call, ADIOS performs burst writes to the file system. However, it depends on the I/O method used in ADIOS, what is done with the data.
+ADIOS~\cite{ADIOS:Lofstead:ipdps09} sits on the top of the I/O stack as a user-level I/O library.
+The write API of ADIOS is designed to be as close to the POSIX I/O calls as possible, but without a
+fix specification about what happens in a "write" call. Datasets are "opened" and "closed" and
+variables are "written" to them. In general, write calls only buffer the data content, and in the
+close call, ADIOS performs burst writes to the file system. However, it depends on the I/O method
+used in an actual run, what is done with the data.
 
-The API lets the scientist express I/O in terms of variables in the code as with HDF5 or NetCDF. An ADIOS dataset consists of typed, multi-dimensional arrays or simple scalars, with global dimensions defined by scalar variables (similar to NetCDF dimensions) or simply by integer values. A writing process also has to declare where its array fits in a global array using offsets and local dimensions.
+The API lets the scientist express I/O in terms of variables in the code as with HDF5 or NetCDF. An
+ADIOS dataset consists of typed, multi-dimensional arrays or simple scalars, with global dimensions
+defined by scalar variables (similar to NetCDF dimensions) or simply by integer values. A writing
+process also has to declare where its array fits in a global array using offsets and local
+dimensions.
 
-ADIOS methods implement different I/O strategies, like writing one file per process, or a single share file, or aggregating data into a certain number of files; to push data into the memory of another application using memory-to-memory transfers, or pull data from another application, and so on. The actual method performing I/O can be selected at runtime in the application. 
+ADIOS methods implement different I/O strategies, like writing one file per process, or a single
+share file, or aggregating data into a certain number of files; to push data into the memory of
+another application using memory-to-memory transfers, or pull data from another application, and so
+on. The actual method performing I/O can be selected at runtime in the application.
 
-The file format designed for ADIOS, and used by most file-based I/O methods in ADIOS, provides a self-describing data format, a log-based data organization and redundant metadata for resiliency and performance. The log-based data organization allows for writing each process' output data into a separate chunk of the file concurrently. In contrast with logically contiguous file formats where the data in the (distributed) memory of the processes has to be reorganized to be stored on disk according to the global, logical organization, this format eliminates i) communication among processes when writing to reorder data and ii) seeking to multiple offsets in the file by a process to write data interleaved with what is written by other processes.While local buffering by the processes exploits the best available I/O bandwidth by streaming large, contiguous chunks to disk, the destination format itself avoids the common bottlenecks that would hamper that performance. The many processes writing to different offsets in a file or to different files avoid each other on a parallel file system to the extent possible. In most cases, each process attempts to write to a single stripe target to avoid the metadata server overhead of spanning storage targets. The reading performance of this file format was shown to be generally advantageous as well~\cite{ADIOS:Lofstead:hpdc11}.
+The file format designed for ADIOS, and used by most file-based I/O methods in ADIOS, provides a
+self-describing data format, a log-based data organization and redundant metadata for resiliency and
+performance. The log-based data organization allows for writing each process' output data into a
+separate chunk of the file concurrently. In contrast with logically contiguous file formats where
+the data in the (distributed) memory of the processes has to be reorganized to be stored on disk
+according to the global, logical organization, this format eliminates i) communication among
+processes when writing to reorder data and ii) seeking to multiple offsets in the file by a process
+to write data interleaved with what is written by other processes.While local buffering by the
+processes exploits the best available I/O bandwidth by streaming large, contiguous chunks to disk,
+the destination format itself avoids the common bottlenecks that would hamper that performance. The
+many processes writing to different offsets in a file or to different files avoid each other on a
+parallel file system to the extent possible. In most cases, each process attempts to write to a
+single stripe target to avoid the metadata server overhead of spanning storage targets. The reading
+performance of this file format was shown to be generally advantageous as
+well~\cite{ADIOS:Lofstead:hpdc11}.
 
 
 
