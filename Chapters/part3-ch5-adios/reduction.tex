@@ -1,2 +1,21 @@
-PARLO comes here
+Application of data reduction techniques with ADIOS have shown to be effective in reducing the
+bottleneck on I/O during simulation writes. These techniques fit well with the minimal communication
+principle employed by ADIOS, where each process handles its own I/O. By applying compression
+routines locally on every process, encoding costs are effectively minimized. This also enables
+compression techniques to take advantage of similarity in data values within each process, typically
+seen with spatio-temporal scientific datasets. For example, ISOBAR \cite{ADIOS:Schendel2012b}, an in situ
+lossless compression routine specific for scientific data, demonstrated up to a 46\% reduction in
+storage on datasets from simulations spanning various domains such as combustion (S3D), plasma
+(XGC1, GTS) and astrophysics (FLASH). This technique coupled with ADIOS and with the addition of
+interleaving allowed throughput gains proportional to the degree of data reduction.
+
+While checkpoint/restart data such as particle data must be compressed losslessly, datasets that are
+used for analysis and visualization, such as field data, can be compressed in a lossy fashion.
+Unlike lossless compression, lossy compression techniques such as wavelets-based compression,
+ISABELA \cite{ADIOS:Lakshminarasimhan2013a}, etc. provide a multi-fold reduction in storage sizes, trading
+precision for reduced storage. Depending on the sensitivity of the analysis routines to errors
+introduced by the compression process, the end-users can change the level of accuracy desired in the
+configuration file used by ADIOS. The configuration file can also instruct ADIOS to employ different
+compression routines for different variables and output groups (checkpoint/restart or analysis),
+without having to change the application code.
 
