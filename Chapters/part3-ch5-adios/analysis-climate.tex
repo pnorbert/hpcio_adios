@@ -1,4 +1,55 @@
 \noindent{\bf Climate research.}
-{\color {red}Yuan}
+Climate modeling applications address one of the most
+pressing issues faced by our society. Numerous surveys show
+increasing trends in the average sea-surface and air temperatures.
+A promising method of predicting the future effects of climate
+change is to run large-scale simulations of the global climate
+many years into the future. In such simulations, climatologists
+discretize our entire globe, setting up differential equations to model
+Earth's climate. These climate simulations can
+generate several terabytes, or even petabytes, of raw data.
+Such data-intensive applications present a tremendous set of
+challenges for computer centers that strive to accommodate,
+maintain, transfer, and preserve data. 
+
+Large-scale computing
+centers that host such applications cannot afford to frequently
+stall on data accesses and lose precious computing cycles.
+The I/O performance of scientific applications such as climate
+models has a great impact on the completion of scientific
+simulation and post-mortem data visualization and analysis.
+However, many applications have complex data characteristics
+that are not well supported by existing parallel I/O libraries.
+For example, applications may generate large number of small
+variables. While the data is large in total, each process only holds very small
+amount of data for each variable. It is challenging to provide
+good I/O speed for both writing and reading. Moreover,
+it is also quite common for data post-processing to examine
+data along time dimension, e.g. observing the change of
+temperature within one hour. However, storage data layouts currently common in use
+do not provide a good support for such access pattern.
+
+NASAs climate and weather models such as GEOS-5 (the
+Goddard Earth Observing System Model) and Model-E are
+such applications. For example, a GEOS-5 simulation at a coarse resolution of half-degree
+generates only 3.12GB data but which consists of 185 2-D variables
+and 80 3-D variables at a time. The number of time steps can be configured to the
+order of thousands. Writing and reading of such small variables poses great
+challenges  on current large-scale storage systems.  
+
+An I/O technique that can
+significantly enhance the spatial and temporal resolution of
+these climate and weather models can systematically lift the
+capability of climatologists and meteorologists in addressing
+critical climate issues. An I/O method of ADIOS was specifically designed to address these problems. It leverages the spatial and temporal
+relationships between variable data. Spatially it aggregates and merges data chunks of
+the same time steps so that fewer processes write
+larger blocks.
+Moreover, the same variable across different time steps are merged together
+with time as a new dimension, which again reduces the amount of I/O
+request for both writing and reading. This strategy has provided two orders of magnitude of speedup compared to simple writing (and reading) strategies. 
+
+
+
 
 
